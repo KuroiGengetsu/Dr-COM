@@ -7,8 +7,8 @@ class TeacherAccountSpider(scrapy.Spider):
     """crawl NJUPT teachers' accounts"""
     name = 'account'
     start_urls = ['http://192.168.168.168/0.htm']
-    year = 1960
-    xxx = 000
+    year = 1960  # this is year
+    xxx = 000  # this is a random number
     password = 000000
 
     def parse(self, response):
@@ -18,9 +18,8 @@ class TeacherAccountSpider(scrapy.Spider):
         if '返' in ''.join(map(str, status)):
             yield scrapy.FormRequest.from_response(response=response,
                                                    formdata={
-                                                       # xxxx is year, xxx is random
                                                        'DDDDD': username,
-                                                       'upass': password  # password
+                                                       'upass': password
                                                    },
                                                    callback=self.parse
                                                   )
