@@ -14,19 +14,6 @@ class TeacherAccountSpider(scrapy.Spider):
     def parse(self, response):
         username = '10100' + str(self.year) + '0' + str(self.xxx) + '00'
         password = str(self.password)
-        yield scrapy.FormRequest.from_response(response=response,
-                                               formdata={
-                                                   # xxxx is year, xxx is random
-                                                   'DDDDD': username,
-                                                   'upass': password  # password
-                                               },
-                                               callback=self.cycle_login
-                                              )
-
-    def cycle_login(self, response):
-        """try password and account again and again"""
-        username = '10100' + str(self.year) + '0' + str(self.xxx) + '00'
-        password = str(self.password)
         status = response.xpath('//input/@value').extract()
         if '返' in ''.join(map(str, status)):
             yield scrapy.FormRequest.from_response(response=response,
@@ -35,5 +22,5 @@ class TeacherAccountSpider(scrapy.Spider):
                                                        'DDDDD': username,
                                                        'upass': password  # password
                                                    },
-                                                   callback=self.cycle_login
+                                                   callback=self.parse
                                                   )
