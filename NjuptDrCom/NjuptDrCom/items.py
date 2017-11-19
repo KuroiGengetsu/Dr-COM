@@ -8,7 +8,7 @@
 import scrapy
 
 
-class NjuptdrcomItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class NjuptDrComItem(scrapy.Item):
+    """items for username and password"""
+    username = scrapy.Field()
+    password = scrapy.Field()
