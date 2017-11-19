@@ -12,3 +12,5 @@ class NjuptDrComItem(scrapy.Item):
     """items for username and password"""
     username = scrapy.Field()
     password = scrapy.Field()
+    error_username = scrapy.Field()
+    error_password = scrapy.Field()
