@@ -55,10 +55,10 @@ def main():
     runner = CrawlerRunner(settings)
 
     # crawl 123456 use this
-    crawl(runner, usernames, ['123456'])
+    # crawl(runner, usernames, ['123456'])
 
     # crawl 000000 to 999999 use this:
-    # crawl(runner, usernames, passwords)
+    crawl(runner, usernames, passwords)
 
     try:
         reactor.run()
