@@ -22,7 +22,10 @@ NEWSPIDER_MODULE = 'NjuptDrCom.spiders'
 ROBOTSTXT_OBEY = False
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 100
+CONCURRENT_REQUESTS = 4
+
+# Configure maximum concurrent DNS
+REACTOR_THREADPOOL_MAXSIZE = 20
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay
@@ -49,8 +52,8 @@ DEFAULT_REQUEST_HEADERS = {
     'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
 #   'Accept-Language': 'en',
     'accept-language': 'zh-CN,zh;q=0.8',
-    'user-agent': 'Chrome/61.0.3163.100 Mozilla/5.0 (Windows NT 6.3) '
-                  'AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36 '
+    'user-agent': 'Chrome/61.0.3293.100 Mozilla/5.0 (Windows NT 6.3) '
+                  'AppleWebKit/537.87 (KHTML, like Gecko) Safari/537.65 '
 }
 #This is what I did.
 
