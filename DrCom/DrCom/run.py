@@ -46,8 +46,7 @@ def main():
     runner = CrawlerRunner(settings)
 
     # 1. To crawl default password `123456` using this:
-    # crawl(runner, usernames, ['123456'])
-    crawl(runner, ['110020160286000'], [str(i) for i in range(233000, 233450)])
+    crawl(runner, usernames, ['123456'])
 
     # 2. To crawl 000000 to 999999 except 123456 using this:
     # crawl(runner, usernames, passwords)
